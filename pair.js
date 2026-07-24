@@ -1148,7 +1148,7 @@ function setupCommandHandlers(socket, number) {
       switch(command) {
               case 'movie':             
 case 'm': {
-    const DEFAULT_FOOTER = `\n\n> 🎭 𝗖𝗛𝗔𝗠𝗔 𝗖𝗜𝗡𝗘 𝗛𝗨𝗕 🎭\n> 🧬 ᴘᴏᴡᴇʀᴇᴅ ʙʏ 🇨🇭𝗔𝗠𝗔 𝗧𝗘𝗖𝗛`;
+    const DEFAULT_FOOTER = `\n\n> 🎭 ALONE-X-MD V8 🇱🇰𝗖𝗜𝗡𝗘 𝗛𝗨𝗕 🎭\n> 🧬 ᴘᴏᴡᴇʀᴇᴅ ʙʏ ALONE-X-MD V8 🇱🇰 𝗧𝗘𝗖𝗛`;
 
     if (!args.length) {
         await socket.sendMessage(sender, {
