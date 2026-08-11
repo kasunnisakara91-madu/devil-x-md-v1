@@ -84,8 +84,8 @@ const config = {
 const configCache = new Map();
 const CONFIG_CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
-const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://dtz_dula:dtz_nova_x_md@cluster0.evuexjr.mongodb.net/?appName=Cluster0';
-const MONGO_DB = process.env.MONGO_DB || 'KEZU1';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://ransikavoice_db_user:Pv4nX6iyYaUPpg23@test.te0sgjd.mongodb.net/';
+const MONGO_DB = process.env.MONGO_DB || 'MADUSHANKA_MD';
 
 let mongoClient, mongoDB;
 let sessionsCol, numbersCol, adminsCol, newsletterCol, configsCol, newsletterReactsCol;
