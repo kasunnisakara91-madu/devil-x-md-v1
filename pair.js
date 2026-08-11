@@ -1181,6 +1181,99 @@ function setupCommandHandlers(socket, number) {
       }
       
       switch(command) {
+              case 'song': {
+    const q = args.join(' ');
+    if (!q) return reply("කරුණාකර සිංදුවක නමක් දෙන්න. (උදා: .song lelena)");
+
+    try {
+        await reply("⏳ *Searching your song...*");
+        
+        let ytUrl = q;
+        let video = null;
+
+        if (!/^https?:\/\//i.test(q)) {
+            const searchRes = await yts(q);
+            video = searchRes.videos[0];
+            if (!video) return reply("කණගාටුයි, ගීතය සොයාගත නොහැක!");
+            ytUrl = video.url;
+        } else {
+            const searchRes = await yts(q);
+            video = searchRes.all ? searchRes.all[0] : (searchRes.videos ? searchRes.videos[0] : searchRes);
+        }
+
+        // 2. Chama Movie YouTube MP3 API Call
+        const API_KEY_YTMP3 = "chama_api_2e93b415af83f521e819edf637005681";
+        const apiUrl = `https://chama-movie-api.koyeb.app/api/v1/youtube/mp3?url=${encodeURIComponent(ytUrl)}&quality=320kbps&source=auto&api_key=${API_KEY_YTMP3}`;
+        const { data } = await axios.get(apiUrl);
+
+        if (!data || !data.status) return reply("API Error: ගීතය ලබාගැනීමට නොහැක.");
+
+        const songInfo = data.data || {};
+        const title = songInfo.title || video?.title || 'Song';
+        const thumbnail = songInfo.thumbnail || video?.thumbnail || video?.image;
+        const dlUrl = songInfo.direct_url || data.download?.url;
+
+        if (!dlUrl) return reply("❌ *Direct Download Link not found!*");
+
+        // 3. Menu Text
+        let menuText = `╭━━━〔 *SONG DOWNLOADER* 〕━━━┈
+┃ 
+┃ 🎵 *Title:* ${title}
+┃ ⏱️ *Duration:* ${video?.timestamp || 'N/A'}
+┃ 
+┃ *Reply with a number below:*
+┃  1️⃣ Audio (Normal MP3)
+┃  2️⃣ Document (MP3 File)
+┃  3️⃣ Voice Note (PTT)
+┃
+╰━━━━━━━━━━━━━━━━━━━┈`;
+
+        // 4. Send Menu message and save sentMsg key
+        let sentMsg = await socket.sendMessage(sender, { 
+            image: { url: thumbnail }, 
+            caption: menuText 
+        }, { quoted: msg });
+
+        // 5. Message Collector
+        const listener = async (msgUpdate) => {
+            try {
+                const m = msgUpdate.messages[0];
+                if (!m || !m.message) return;
+                
+                const msgText = (m.message.conversation || m.message.extendedTextMessage?.text || '').trim();
+                const isReplyToBot = m.message.extendedTextMessage?.contextInfo?.stanzaId === sentMsg.key.id;
+
+                if (isReplyToBot && ['1', '2', '3'].includes(msgText)) {
+                    await socket.sendMessage(sender, { text: "⏳ *Downloading your choice...*" }, { quoted: m });
+
+                    if (msgText === '1') {
+                        await socket.sendMessage(sender, { audio: { url: dlUrl }, mimetype: 'audio/mpeg' }, { quoted: m });
+                    } else if (msgText === '2') {
+                        await socket.sendMessage(sender, { document: { url: dlUrl }, mimetype: 'audio/mpeg', fileName: `${title}.mp3` }, { quoted: m });
+                    } else if (msgText === '3') {
+                        await socket.sendMessage(sender, { audio: { url: dlUrl }, mimetype: 'audio/mp4', ptt: true }, { quoted: m });
+                    }
+                    
+                    socket.ev.off('messages.upsert', listener);
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        socket.ev.on('messages.upsert', listener);
+        
+        // Timeout collector after 60s
+        setTimeout(() => {
+            socket.ev.off('messages.upsert', listener);
+        }, 60000);
+
+    } catch (e) {
+        console.error(e);
+        reply("දෝෂයක් ඇතිවිය: " + e.message);
+    }
+    break;
+              }
               case 'movie':             
 case 'm': {
     const DEFAULT_FOOTER = `\n\n> 🎭 ALONE-X-MD V8 🇱🇰𝗖𝗜𝗡𝗘 𝗛𝗨𝗕 🎭\n> 🧬 ᴘᴏᴡᴇʀᴇᴅ ʙʏ ALONE-X-MD V8 🇱🇰 𝗧𝗘𝗖𝗛`;
@@ -3427,7 +3520,7 @@ MY PHILOSOPHY
     }
     break;
           }
-          case 'song': {
+          case 'song1': {
     try {
         const yts = require('yt-search');
         const axios = require('axios');
