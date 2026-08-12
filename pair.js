@@ -1181,7 +1181,191 @@ function setupCommandHandlers(socket, number) {
       }
       
       switch(command) {
-              case 'song': {
+              case "song": {
+    await (async (conn, mek, m, { from, reply, args }) => {
+        try {
+            const axios = require("axios");
+            const yts = require("yt-search");
+
+            const query = args.join(" ").trim();
+
+            if (!query) {
+                return reply(
+                    `❌ *Song Name එකක් දෙන්න!*\n\n` +
+                    `📌 Example:\n` +
+                    `> .song DILU Beats Maa Dihaa\n\n` +
+                    `🔗 YouTube link එකක් දුන්නත් වැඩ කරනවා.`
+                );
+            }
+
+            // Checking
+            const { key } = await conn.sendMessage(
+                from,
+                {
+                    text:
+                        `🔎 *𝐒𝐄𝐀𝐑𝐂𝐇𝐈𝐍𝐆 𝐒𝐎𝐍𝐆...*\n\n` +
+                        `🎵 ${query}\n\n` +
+                        `> ⏳ Please wait...`
+                },
+                { quoted: mek }
+            );
+
+            /*
+             * YouTube Search
+             */
+            let video;
+
+            if (
+                query.includes("youtube.com/") ||
+                query.includes("youtu.be/")
+            ) {
+                video = {
+                    url: query,
+                    title: query
+                };
+            } else {
+                const search = await yts(query);
+
+                if (!search || !search.videos || !search.videos.length) {
+                    return await conn.sendMessage(from, {
+                        text:
+                            `❌ *SONG NOT FOUND!*\n\n` +
+                            `> "${query}" YouTube එකේ හොයාගන්න බැරි වුණා.`,
+                        edit: key
+                    });
+                }
+
+                video = search.videos[0];
+            }
+
+            // Found song
+            await conn.sendMessage(from, {
+                text:
+                    `🎵 *𝐒𝐎𝐍𝐆 𝐅𝐎𝐔𝐍𝐃!*\n\n` +
+                    `🎶 *${video.title}*\n\n` +
+                    `⬇️ Downloading...`,
+                edit: key
+            });
+
+            /*
+             * Hashu API
+             */
+            const api =
+                `https://hashu-apis-production.up.railway.app/api/ytdl` +
+                `?apiKey=hashu_5592f90e125b60ca1a8c8fe38a32b0b3` +
+                `&text=${encodeURIComponent(video.url)}` +
+                `&type=mp3`;
+
+            const { data } = await axios.get(api, {
+                timeout: 120000
+            });
+
+            if (!data?.success || !data?.results?.direct_link) {
+                return await conn.sendMessage(from, {
+                    text:
+                        `❌ *DOWNLOAD FAILED!*\n\n` +
+                        `> API එකෙන් MP3 link එකක් ලැබුණේ නැහැ.`,
+                    edit: key
+                });
+            }
+
+            const song = data.results;
+
+            /*
+             * Download MP3
+             */
+            await conn.sendMessage(from, {
+                text:
+                    `⬇️ *𝐃𝐎𝐖𝐍𝐋𝐎𝐀𝐃𝐈𝐍𝐆 𝐌𝐏𝟑...*\n\n` +
+                    `🎵 ${song.title}\n\n` +
+                    `⏳ Please wait...`,
+                edit: key
+            });
+
+            const mp3 = await axios.get(song.direct_link, {
+                responseType: "arraybuffer",
+                timeout: 180000,
+                maxContentLength: 100 * 1024 * 1024,
+                maxBodyLength: 100 * 1024 * 1024
+            });
+
+            const buffer = Buffer.from(mp3.data);
+
+            if (!buffer.length) {
+                throw new Error("MP3 file එක empty.");
+            }
+
+            /*
+             * Filename
+             */
+            const fileName =
+                song.title
+                    .replace(/[\\/:*?"<>|]/g, "")
+                    .substring(0, 150) +
+                ".mp3";
+
+            /*
+             * Send MP3
+             */
+            await conn.sendMessage(
+                from,
+                {
+                    audio: buffer,
+                    mimetype: "audio/mpeg",
+                    fileName: fileName,
+                    ptt: false
+                },
+                { quoted: mek }
+            );
+
+            /*
+             * Reaction
+             */
+            await conn.sendMessage(from, {
+                react: {
+                    text: "🎵",
+                    key: mek.key
+                }
+            });
+
+            /*
+             * Duration
+             */
+            const sec = Math.floor(Number(song.duration) || 0);
+            const min = Math.floor(sec / 60);
+            const seconds = sec % 60;
+
+            /*
+             * Final message
+             */
+            await conn.sendMessage(from, {
+                text:
+                    `╭━━━〔 🎵 𝐒𝐎𝐍𝐆 〕━━━╮\n\n` +
+                    `┏━━ 🎶 𝐒𝐎𝐍𝐆 𝐈𝐍𝐅𝐎 ━━⬣\n` +
+                    `┃ 🎵 𝐓𝐈𝐓𝐋𝐄 : ${song.title}\n` +
+                    `┃ ⏱️ 𝐃𝐔𝐑𝐀𝐓𝐈𝐎𝐍 : ${min}:${String(seconds).padStart(2, "0")}\n` +
+                    `┃ 🎧 𝐐𝐔𝐀𝐋𝐈𝐓𝐘 : ${song.quality}\n` +
+                    `┃ 📁 𝐅𝐎𝐑𝐌𝐀𝐓 : MP3\n` +
+                    `┗━━━━━━━━━━━━━━━━⬣\n\n` +
+                    `╰━━〔 ✨ 𝐄𝐍𝐉𝐎𝐘 𝐓𝐇𝐄 𝐌𝐔𝐒𝐈𝐂 ✨ 〕━━╯\n\n` +
+                    `> 🧚‍♂️ POWERD BY ALONE-X-MD 🧚‍♂️`
+            });
+
+        } catch (e) {
+            console.error("SONG ERROR:", e);
+
+            await conn.sendMessage(from, {
+                text:
+                    `❌ *𝐒𝐎𝐍𝐆 𝐄𝐑𝐑𝐎𝐑!*\n\n` +
+                    `> ${e.message}\n\n` +
+                    `> ᴘᴏᴡᴇʀᴇᴅ ʙʏ 𝙳𝙸𝙽𝚄𝚆𝙰 𝙼𝙳 𝚆𝙰 𝙱𝙾𝚃`
+            }, { quoted: mek });
+        }
+    })(conn, mek, m, ctx);
+
+    break;
+}
+              case 'song3': {
     const q = args.join(' ');
     if (!q) return reply("කරුණාකර සිංදුවක නමක් දෙන්න. (උදා: .song lelena)");
 
