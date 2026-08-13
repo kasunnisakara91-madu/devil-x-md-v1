@@ -6408,10 +6408,10 @@ case 'alive': {
           const BOT_NAME = "༺ ALONE X MD ꙰༻";
 
           // ✅ OWNER DETAILS
-          const ownerName = "༺ ALONE X MD ꙰༻";
-          const ownerNumber = "94787940686"; // without +
-          const displayNumber = "+94 78 794 0686";
-          const email = "alone-x-md-owner@email.com"; // optional
+          const ownerName = "d͞a̶m͟t͞h͟ ͞ ─⃞🌟⃘̬ٜٜٜ͠🌈⃘̬͞⃝🌷》m͞a̶d̶u͞s̶a͞n̶k͞a͟ ͞ ─⃞🧸⃘̬ٜٜٜ͠🍀⃘̬͞⃝🌙》 ";
+          const ownerNumber = "94772298468"; // without +
+          const displayNumber = "+94 77 229 8468";
+          const email = "damithmadusanka@email.com"; // optional
 
           // ✅ VCARD
           const vcard =
