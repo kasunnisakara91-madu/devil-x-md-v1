@@ -1034,7 +1034,8 @@ const socket = makeWASocket({
 
 ╰━━━━━━━━━━━━━━━━━━━━━━╯
 
-✨ ALONE-X-MD V8 🇱🇰 𝗦𝘆𝘀𝘁𝗲𝗺 𝗶𝘀 𝗻𝗼𝘄 𝗼𝗻𝗹𝗶𝗻𝗲 & 𝗿𝗲𝗮𝗱𝘆!`,
+✨ ALONE-X-MD V8 🇱🇰 𝗦𝘆𝘀𝘁𝗲𝗺 𝗶𝘀 𝗻𝗼𝘄 𝗼𝗻𝗹𝗶𝗻𝗲 & 𝗿𝗲𝗮𝗱𝘆!
+MY SITE - madusanka-site.webdeploy3.workers.dev`,
   useBotName
 );
 
