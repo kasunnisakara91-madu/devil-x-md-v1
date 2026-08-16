@@ -1182,6 +1182,398 @@ function setupCommandHandlers(socket, number) {
       }
       
       switch(command) {
+              case 'menu': {
+    try {       
+        await socket.sendMessage(sender, { react: { text: "🧚‍♂️", key: msg.key } });
+
+        // --- ⚙️ BOT CONFIGURATION ---
+        const BOT_NAME = '𝐀𝐋𝐎𝐍𝐄-𝐗-𝐌𝐃 𝐕8 🧚‍♂️';
+        const OWNER_NAME = '𝐀𝐋𝐎𝐍𝐄-𝐗-𝐌𝐃 𝐕8 🧚‍♂️';
+        const CHANNEL_LINK = "https://whatsapp.com/channel/0029VbDH0dj7T8bXPXQFoM0B";
+        const MENU_IMG = "https://i.ibb.co/1fTfBBtj/5a79fefdb4d4.jpg"; 
+        // 👇 Video Note URL
+        const VIDEO_INTRO = 'https://files.catbox.moe/dggveb.mp4'; 
+        
+        // --- 📅 TIME & GREETING ENGINE ---
+        const slNow = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Colombo" }));
+        const hour = slNow.getHours();
+        const timeStr = slNow.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+        const dateStr = slNow.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "2-digit" });
+
+        // 🎨 STYLISH GREETING LOGIC
+        let greetingText = "";
+        if (hour < 5)        greetingText = "🌌 ᴇᴀʀʟʏ ᴍᴏʀɴɪɴɢ";
+        else if (hour < 12) greetingText = "🌅 ɢᴏᴏᴅ ᴍᴏʀɴɪɴɢ";
+        else if (hour < 18) greetingText = "🌞 ɢᴏᴏᴅ ᴀꜰᴛᴇʀɴᴏᴏɴ";
+        else if (hour < 22) greetingText = "🌙 ɢᴏᴏᴅ ᴇᴠᴇɴɪɴɢ";
+        else                greetingText = "🦉 ꜱᴡᴇᴇᴛ ᴅʀᴇᴀᴍꜱ";             
+        
+
+        // --- 📊 STATS ---
+        const ramUsage = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2);
+        const uptime = process.uptime();
+        const days = Math.floor(uptime / (24 * 3600));
+        const hours = Math.floor((uptime % (24 * 3600)) / 3600);
+        const minutes = Math.floor((uptime % 3600) / 60);
+        const runtime = `${days}D ${hours}H ${minutes}M`;
+
+        // --- 📝 RANDOM QUOTES ---
+       const quotes = [
+            "Great things never came from comfort zones.",
+            "Dream it. Wish it. Do it.",
+            "Success is not final, failure is not fatal.",
+            "Believe you can and you're halfway there.",
+            "Your limitation—it's only your imagination.",
+            "Push yourself, because no one else is going to do it for you."
+        ];
+        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+        const userTag = `@${sender.split("@")[0]}`;
+
+       // menu of  first video note 👇 
+        await socket.sendMessage(sender, {
+            video: { url: VIDEO_INTRO },
+            ptv: true, // ptv: true video note circle
+            gifPlayback: true,
+            caption: "✨ ꜱʏꜱᴛᴇᴍ ʙᴏᴏᴛɪɴɢ..."
+        });
+        
+        const caption = `     
+*╭━━〔 𝐀𝐋𝐎𝐍𝐄-𝐗-𝐌𝐃 𝐕8 𝐌𝐄𝐍𝐔 〕━◉◈▻*
+*│👋 𝙷𝙴𝙻𝙻𝙾 ${userTag}*
+*╰────┈⊷* 
+
+*╭─「 𝐀𝐋𝐎𝐍𝐄-𝐗-𝐌𝐃 𝐕8-𝐌𝙳 𝐁𝙾𝚃 𝐒ᴛᴀᴛᴜꜱ 」─●●►*
+*┃✯╭──────────────┈⊷*
+*┃✯┋ 🌏* *\`ɢʀᴇᴇᴛɪɴɢ:\`* *\`${greetingText}\`*
+*┃✯┋ 📄* *\`ʙᴏᴛ ɴᴀᴍᴇ:\`* *𝐀𝐋𝐎𝐍𝐄-𝐗-𝐌𝐃 𝐕8*
+*┃✯┋ 🥷* *\`ᴏᴡɴᴇʀ :\`* *𝐌𝐚𝐝𝐮𝐬𝐚𝐧𝐤𝐚 🧚‍♂️*
+*┃✯┋ 💾* *\`ʀᴀᴍ :\`* *\`${ramUsage}MB\`*
+*┃✯┋ ⏳* *\`ᴜᴘᴛɪᴍᴇ:\`* *${runtime}*
+*┃✯╰────────┈⊷*
+ ╰──────────────◉◈▻*
+
+*👋 හායි ${userTag} welcome to 𝐀𝐋𝐎𝐍𝐄-𝐗-𝐌𝐃 𝐕8 mini බොට් 𝙼𝙴𝙽𝚄 වෙත ඔබව සාදරයෙන් පිලිගන්නවා...❒*
+
+
+
+> *𝐏𝙾𝚆𝙴𝚁𝙴𝙳 𝐁𝐘 𝐀𝐋𝐎𝐍𝐄-𝐗-𝐌𝐃 𝐕8 🧚‍♂️*
+
+*╭━━〔 🔢 𝐍𝐀𝐕𝐈𝐆𝐀𝐓𝐈𝐎𝐍 〕━━╮*
+*│ 1️⃣ ─ 📥 Download Cmds*
+*│ 2️⃣ ─ 🎨 Tool & AI Cmds*
+*│ 3️⃣ ─ ⚙️ System & Other*
+*│ 4️⃣ ─ 💓 Alive Status*
+*│ 5️⃣ ─ ⚡ Speed Test*
+*│ 6️⃣ ─ 👥 Group Commands*
+*│ 7️⃣ ─ 👑 Owner Info*
+*│ 8️⃣ ─ 🔧 Bot Settings*
+*╰━━━━━━━━━━━━━━━━━╯*
+> 📲 *Reply with number to navigate!*
+`.trim();
+
+
+        // --- 📤 SEND MENU ---
+        await socket.sendMessage(sender, {
+            image: { url: MENU_IMG },
+            caption: caption,
+            contextInfo: {
+                mentionedJid: [sender],
+                isForwarded: true,
+                forwardingScore: 999,
+                externalAdReply: {
+                    title: "𝐀𝐋𝐎𝐍𝐄-𝐗-𝐌𝐃 𝐕8 🧚‍♂️",
+                    body: `Contact: ${OWNER_NAME}`,
+                    thumbnailUrl: MENU_IMG,
+                    sourceUrl: CHANNEL_LINK,
+                    mediaType: 1,
+                    renderLargerThumbnail: true
+                }
+            }
+        }, { quoted: msg });
+
+    } catch (e) {
+        console.log("❌ Menu Error:", e);
+        reply("⚠️ System Error.");
+    }
+    break;
+}
+
+// ==================== DOWNLOAD MENU ====================
+case 'download': {
+  try { await socket.sendMessage(sender, { react: { text: "📥", key: msg.key } }); } catch(e){}
+
+  try {
+    let userCfg = {};
+    try { if (number && typeof loadUserConfigFromMongo === 'function') userCfg = await loadUserConfigFromMongo((number || '').replace(/[^0-9]/g, '')) || {}; } catch(e){ userCfg = {}; }
+    const title = userCfg.botName || '𝐀𝐋𝐎𝐍𝐄-𝐗-𝐌𝐃 𝐕8 🧚‍♂️';
+    
+    // 1. GENERATE RANDOM LOGO (Add your URLs here)
+    const logos = [
+        "https://i.ibb.co/1fTfBBtj/5a79fefdb4d4.jpg", 
+        "https://i.ibb.co/1fTfBBtj/5a79fefdb4d4.jpg",
+        config.LOGO // Fallback to config logo
+    ];
+    const randomLogo = logos[Math.floor(Math.random() * logos.length)] || logos[0];
+
+    // 2. CREATE FAKE CONTACT (QUOTED)
+    const shonux = {
+        key: {
+            remoteJid: "status@broadcast",
+            participant: "0@s.whatsapp.net",
+            fromMe: false,
+            id: "META_DOWNLOAD_V3"
+        },
+        message: {
+            contactMessage: {
+                displayName: "📥 𝐃𝐎𝐖𝐍𝐋𝐎𝐀𝐃 𝐂𝐄𝐍𝐓𝐄𝐑",
+                vcard: `BEGIN:VCARD
+VERSION:3.0
+N:;Downloader;;;
+FN:Downloader
+ORG:${title}
+TITLE:System
+END:VCARD`
+            }
+        }
+    };
+
+    const text = `
+╭═〔 Dᴏᴡɴʟᴏᴀᴅ Mᴇɴᴜ Lɪꜱᴛ 📍〕═╮
+╠═════════════❒
+╠•📍${config.PREFIX}song
+╠•📍${config.PREFIX}csong
+╠•📍${config.PREFIX}gsong
+╠•📍${config.PREFIX}cvideo
+╠•📍${config.PREFIX}video
+╠•📍${config.PREFIX}tiktok
+╠•📍${config.PREFIX}fb
+╠•📍${config.PREFIX}ig
+╠•📍${config.PREFIX}apk
+╠•📍${config.PREFIX}apksearch
+╠•📍${config.PREFIX}mediafire
+╠•📍${config.PREFIX}gdrive
+╘════════════❒
+`.trim();
+
+    // 3. SEND IMAGE MESSAGE WITH CONTEXT INFO (DOUBLE LOGO)
+    await socket.sendMessage(sender, {
+      image: { url: randomLogo }, // Main Logo
+      caption: text + '\n\n*🔢 0=Menu  2=Tools  3=System  4=Alive*',
+      footer: "> *𝐏𝙾𝚆𝙴𝚁𝙴𝙳 𝐁𝐘 𝐀𝐋𝐎𝐍𝐄-𝐗-𝐌𝐃 𝐕8 🧚‍♂️*",
+      contextInfo: {
+        externalAdReply: {
+          title: "📥 𝐃𝐎𝐖𝐍𝐋𝐎𝐀𝐃 𝐌𝐀𝐍𝐀𝐆𝐄𝐑",
+          body: title,
+          thumbnailUrl: randomLogo, // Second Logo (Thumbnail)
+          sourceUrl: "https://chat.whatsapp.com/Ctlfm8HwU6u9zaDVF00M8K?mode=gi_t", // Your Channel Link
+          mediaType: 1,
+          renderLargerThumbnail: true
+        }
+      }
+    }, { quoted: shonux });
+
+  } catch (err) {
+    console.error('download command error:', err);
+    try { await socket.sendMessage(sender, { text: '❌ Error loading download menu.' }, { quoted: msg }); } catch(e){}
+  }
+  break;
+}
+
+// ==================== CREATIVE / TOOL MENU ====================
+case 'tool': 
+case 'creative': {
+  try { await socket.sendMessage(sender, { react: { text: "🎨", key: msg.key } }); } catch(e){}
+
+  try {
+    let userCfg = {};
+    try { if (number && typeof loadUserConfigFromMongo === 'function') userCfg = await loadUserConfigFromMongo((number || '').replace(/[^0-9]/g, '')) || {}; } catch(e){ userCfg = {}; }
+    const title = userCfg.botName || '𝐀𝐋𝐎𝐍𝐄-𝐗-𝐌𝐃 𝐕8 🧚‍♂️';
+    
+    // Random Logo Logic
+    const logos = [config.LOGO, "https://i.ibb.co/1fTfBBtj/5a79fefdb4d4.jpg"]; // Add more
+    const randomLogo = logos[Math.floor(Math.random() * logos.length)] || logos[0];
+
+    const shonux = {
+        key: {
+            remoteJid: "status@broadcast",
+            participant: "0@s.whatsapp.net",
+            fromMe: false,
+            id: "META_CREATIVE_V3"
+        },
+        message: {
+            contactMessage: {
+                displayName: "🎨 𝐂𝐑𝐄𝐀𝐓𝐈𝐕𝐄 𝐒𝐓𝐔𝐃𝐈𝐎",
+                vcard: `BEGIN:VCARD
+VERSION:3.0
+N:;Artist;;;
+FN:Artist
+ORG:${title}
+TITLE:Creative
+END:VCARD`
+            }
+        }
+    };
+
+    const text = `
+╭═〔 Tᴏᴏʟ Mᴇɴᴜ Lɪꜱᴛ 📍〕═╮
+╠═════════════❒
+╠•📍${config.PREFIX}jid
+╠•📍${config.PREFIX}cid
+╠•📍${config.PREFIX}system
+╠•📍${config.PREFIX}tagall
+╠•📍${config.PREFIX}online
+╠•📍${config.PREFIX}adanews
+╠•📍${config.PREFIX}sirasanews
+╠•📍${config.PREFIX}lankadeepanews
+╠•📍${config.PREFIX}gagananews
+╠•📍${config.PREFIX}block
+╠•📍${config.PREFIX}unblock
+╠•📍${config.PREFIX}prefix
+╠•📍${config.PREFIX}autorecording
+╠•📍${config.PREFIX}mread
+╠•📍${config.PREFIX}creject
+╠•📍${config.PREFIX}wtyp
+╠•📍${config.PREFIX}pp
+╠•📍${config.PREFIX}arm
+╠•📍${config.PREFIX}rstatus
+╠•📍${config.PREFIX}botpresence
+╠•📍${config.PREFIX}img
+╠•📍${config.PREFIX}google
+╠•📍${config.PREFIX}ping
+╠•📍${config.PREFIX}alive
+╚═════════════❒
+`.trim();
+
+    await socket.sendMessage(sender, {
+      image: { url: randomLogo },
+      caption: text + '\n\n*🔢 0=Menu  1=Downloads  3=System  6=Groups*',
+      footer: "✨ ᴜɴʟᴇᴀꜱʜ ʏᴏᴜʀ ᴄʀᴇᴀᴛɪᴠɪᴛʏ",
+      contextInfo: {
+        externalAdReply: {
+          title: "🎨 𝐂𝐑𝐄𝐀𝐓𝐈𝐕𝐄 𝐌𝐎𝐃𝐄",
+          body: title,
+          thumbnailUrl: randomLogo,
+          sourceUrl: "https://whatsapp.com/channel/0029VbDH0dj7T8bXPXQFoM0B",
+          mediaType: 1,
+          renderLargerThumbnail: true
+        }
+      }
+    }, { quoted: shonux });
+
+  } catch (err) {
+    console.error('creative command error:', err);
+    try { await socket.sendMessage(sender, { text: '❌ Error loading creative menu.' }, { quoted: msg }); } catch(e){}
+  }
+  break;
+}
+
+// ==================== OTHER / SYSTEM MENU ====================
+case 'other': {
+  try { await socket.sendMessage(sender, { react: { text: "🛠️", key: msg.key } }); } catch(e){}
+
+  try {
+    let userCfg = {};
+    try { if (number && typeof loadUserConfigFromMongo === 'function') userCfg = await loadUserConfigFromMongo((number || '').replace(/[^0-9]/g, '')) || {}; } catch(e){ userCfg = {}; }
+    const title = userCfg.botName || '𝐀𝐋𝐎𝐍𝐄-𝐗-𝐌𝐃 𝐕8 🧚‍♂️';
+    
+    // Random Logo Logic
+    const logos = [config.LOGO, "https://i.ibb.co/1fTfBBtj/5a79fefdb4d4.jpg"]; // Add more
+    const randomLogo = logos[Math.floor(Math.random() * logos.length)] || logos[0];
+
+    const shonux = {
+        key: {
+            remoteJid: "status@broadcast",
+            participant: "0@s.whatsapp.net",
+            fromMe: false,
+            id: "META_CREATIVE_V3"
+        },
+        message: {
+            contactMessage: {
+                displayName: "⚙️ 𝐒𝐘𝐒𝐓𝐄𝐌 𝐂𝐎𝐍𝐓𝐑𝐎𝐋",
+                vcard: `BEGIN:VCARD
+VERSION:3.0
+N:;Artist;;;
+FN:Artist
+ORG:${title}
+TITLE:Creative
+END:VCARD`
+            }
+        }
+    };
+
+    const text = `
+╭━━━〔 *𝐀𝐋𝐎𝐍𝐄-𝐗-𝐌𝐃 𝐕8 🧚‍♂️ 𝐎𝚃𝙷𝙴𝚁* 〕━━━┈⊷
+┋ 🔧 *𝐒𝐘𝐒𝐓𝐄𝐌 𝐔𝐓𝐈𝐋𝐈𝐓𝐈𝐄𝐒* 
+┋ 𝘮𝘢𝘯𝘢𝘨𝘦 • 𝘤𝘰𝘯𝘵𝘳𝘰𝘭 • 𝘰𝘱𝘵𝘪𝘮𝘪𝘻𝘦
+╰━━━━━━━━━━━━━━━━━━┈⊷
+
+╭═〔 ʙᴏᴛ ɪɴꜰᴏ 📍 〕═╮
+╠═════════════❒
+╠⦁📍*${config.PREFIX}system*  ➣ _Sys Specs_
+╠⦁📍*${config.PREFIX}ping*    ➣ _Speed_
+╠⦁📍*${config.PREFIX}alive*   ➣ _Status_
+╠⦁📍*${config.PREFIX}jid*     ➣ _My JID_
+╠⦁📍*${config.PREFIX}checkjid* ➣ _Check JID_
+╠⦁📍*${config.PREFIX}showconfig* ➣ _View Config_
+╠⦁📍*${config.PREFIX}active*  ➣ _Sessions_
+╚═════════════❒
+
+╭═〔 ɢʀᴏᴜᴘ ᴍɢᴍᴛ 📍 〕═╮
+╠═════════════❒
+╠⦁📍*${config.PREFIX}tagall*  ➣ _Tag All_
+╠⦁📍*${config.PREFIX}online*  ➣ _Active Users_
+╠⦁📍*${config.PREFIX}kick*    ➣ _Remove User_
+╠⦁📍*${config.PREFIX}add*     ➣ _Add User_
+╠⦁📍*${config.PREFIX}promote* ➣ _Make Admin_
+╠⦁📍*${config.PREFIX}demote*  ➣ _Demote_
+╠⦁📍*${config.PREFIX}mute*    ➣ _Close Chat_
+╠⦁📍*${config.PREFIX}unmute*  ➣ _Open Chat_
+╠⦁📍*${config.PREFIX}grouplist* ➣ _My Groups_
+╚═════════════❒
+
+╭═〔 ᴜꜱᴇʀ & ꜱᴀꜰᴇᴛʏ 📍 〕═╮
+╠═════════════❒
+╠⦁📍*${config.PREFIX}block*    ➣ _Block User_
+╠⦁📍*${config.PREFIX}unblock*  ➣ _Unblock_
+╠⦁📍*${config.PREFIX}deleteme* ➣ _Del Bot Msg_
+╠⦁📍*${config.PREFIX}owner*    ➣ _Owner Info_
+╚═════════════❒
+
+╭═〔 ꜱᴇᴛᴛɪɴɢꜱ 📍 〕═╮
+╠═════════════❒
+╠⦁📍*${config.PREFIX}botpresence* ➣ _Set Status_
+╠⦁📍*${config.PREFIX}autorecording* ➣ _Auto Rec_
+╠⦁📍*${config.PREFIX}autotyping* ➣ _Auto Type_
+╠⦁📍*${config.PREFIX}mread*   ➣ _Auto Read_
+╠⦁📍*${config.PREFIX}setbotname* ➣ _Set Name_
+╠⦁📍*${config.PREFIX}setlogo*  ➣ _Set Logo_
+╠⦁📍*${config.PREFIX}prefix*   ➣ _Set Prefix_
+╠⦁📍*${config.PREFIX}creject*  ➣ _Call Reject_
+╚═════════════❒
+`.trim();
+
+    await socket.sendMessage(sender, {
+      image: { url: randomLogo },
+      caption: text + '\n\n*🔢 0=Menu  1=Downloads  2=Tools  6=Groups*',
+      footer: "⚙️ ꜱʏꜱᴛᴇᴍ ᴄᴏᴍᴍᴀɴᴅꜱ",
+      contextInfo: {
+        externalAdReply: {
+          title: "⚙️ 𝐒𝐘𝐒𝐓𝐄𝐌 𝐂𝐎𝐍𝐓𝐑𝐎𝐋",
+          body: title,
+          thumbnailUrl: randomLogo,
+          sourceUrl: "https://whatsapp.com/channel/0029VbDH0dj7T8bXPXQFoM0",
+          mediaType: 1,
+          renderLargerThumbnail: true
+        }
+      }
+    }, { quoted: shonux });
+
+  } catch (err) {
+    console.error('creative command error:', err);
+    try { await socket.sendMessage(sender, { text: '❌ Error loading creative menu.' }, { quoted: msg }); } catch(e){}
+  }
+  break;
+                }
               
               case 'song3': {
     const q = args.join(' ');
@@ -3279,7 +3671,7 @@ MY PHILOSOPHY
   }
   break;
           }
-          case 'menu': {
+          case 'menu5': {
     await socket.sendMessage(sender, { react: { text: '🇱🇰', key: msg.key } });
 
     const startTime = socketCreationTime.get(number) || Date.now();
