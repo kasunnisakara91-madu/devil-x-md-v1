@@ -1,3 +1,4 @@
+const axios = require("axios");
 const express = require('express');
 const fs = require('fs-extra');
 const path = require('path');
@@ -1182,6 +1183,121 @@ function setupCommandHandlers(socket, number) {
       }
       
       switch(command) {
+              case "song": {
+    if (!text) {
+        return reply(
+            `🎵 *SONG DOWNLOADER*\n\n` +
+            `YouTube URL එකක් දෙන්න.\n\n` +
+            `Example:\n` +
+            `${prefix}song https://youtu.be/xxxxx`
+        );
+    }
+
+    try {
+        await reply("⏳ *Song එක download කරමින්...*");
+
+        const API_KEY =
+            "Sasa_Dev_Api_836d433e27c7f1ce8356deb72a7cb0e7dad8deb1";
+
+        const API_URL =
+            "https://api.sasatech.online/api/mp3_v2" +
+            "?apikey=" + encodeURIComponent(API_KEY) +
+            "&url=" + encodeURIComponent(text.trim());
+
+        const response = await axios.get(API_URL, {
+            timeout: 120000,
+            headers: {
+                "User-Agent": "Mozilla/5.0"
+            }
+        });
+
+        const data = response.data;
+
+        console.log(
+            "🎵 SASA MP3 RESPONSE:",
+            JSON.stringify(data, null, 2)
+        );
+
+        /*
+         * Try common response structures
+         */
+        const audioUrl =
+            data?.result?.downloadUrl ||
+            data?.result?.download_url ||
+            data?.result?.download ||
+            data?.result?.audioUrl ||
+            data?.result?.audio_url ||
+            data?.result?.audio ||
+            data?.result?.url ||
+
+            data?.data?.downloadUrl ||
+            data?.data?.download_url ||
+            data?.data?.download ||
+            data?.data?.audioUrl ||
+            data?.data?.audio_url ||
+            data?.data?.audio ||
+            data?.data?.url ||
+
+            data?.downloadUrl ||
+            data?.download_url ||
+            data?.download ||
+            data?.audioUrl ||
+            data?.audio_url ||
+            data?.audio ||
+            data?.url;
+
+        const title =
+            data?.result?.title ||
+            data?.data?.title ||
+            data?.title ||
+            "Song";
+
+        if (!audioUrl || typeof audioUrl !== "string") {
+
+            console.log(
+                "❌ AUDIO URL NOT FOUND:",
+                JSON.stringify(data, null, 2)
+            );
+
+            return reply(
+                `❌ *Song download link එක හම්බ වුණේ නැහැ.*\n\n` +
+                `API response එක console එකේ check කරන්න.`
+            );
+        }
+
+        /*
+         * Send MP3 as WhatsApp audio
+         */
+        await sock.sendMessage(
+            from,
+            {
+                audio: {
+                    url: audioUrl
+                },
+                mimetype: "audio/mpeg",
+                fileName: `${title}.mp3`,
+                ptt: false
+            },
+            {
+                quoted: msg
+            }
+        );
+
+    } catch (error) {
+
+        console.error(
+            "❌ SONG API ERROR:",
+            error.response?.data || error.message
+        );
+
+        return reply(
+            `❌ *Song download failed!*\n\n` +
+            `API එකෙන් song එක ලබාගන්න බැරි වුණා.`
+        );
+    }
+
+    break;
+                                         }
               case 'menu8': {
     try {       
         await socket.sendMessage(sender, { react: { text: "🧚‍♂️", key: msg.key } });
