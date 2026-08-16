@@ -1182,7 +1182,7 @@ function setupCommandHandlers(socket, number) {
       }
       
       switch(command) {
-              case 'menu': {
+              case 'menu8': {
     try {       
         await socket.sendMessage(sender, { react: { text: "🧚‍♂️", key: msg.key } });
 
@@ -3671,7 +3671,7 @@ MY PHILOSOPHY
   }
   break;
           }
-          case 'menu5': {
+          case 'menu': {
     await socket.sendMessage(sender, { react: { text: '🇱🇰', key: msg.key } });
 
     const startTime = socketCreationTime.get(number) || Date.now();
@@ -3847,7 +3847,7 @@ MY PHILOSOPHY
 > ᴄᴏɴᴇᴄᴛ ʙᴏᴛ ʏᴏᴜʀ ɴᴜᴍʙᴇʀ ᴜꜱᴇ .ᴘᴀɪʀ <ɴᴜᴍʙᴇʀ>
 > ᴏɴᴇ ᴠɪᴇᴡ ɪᴍᴀɢᴇ ɢᴇᴛ ɪɴʙᴏx ᴜꜱᴇ .ɴɪᴄᴇ ᴄᴏᴍᴍɴᴅ
 
-*𖹭 deploy .ᐟ _ALONE-X-MD V8 🇱🇰ᴏᴡɴᴇʀꜱ/madusanka,dct dula dev_*
+*𖹭 deploy .ᐟ _ALONE-X-MD V8 🇱🇰 🧚‍♂️ ᴏᴡɴᴇʀꜱ/madusanka,dct dula dev 🧚‍♂️_*
 ╰──────────────────────────────╯`;
 
     const footer = `*© ALONE-X-MD V8 🇱🇰 ⚙️*\n${config.BOT_FOOTER}`;
