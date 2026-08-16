@@ -39,7 +39,7 @@ const config = {
   MAX_RETRIES: 3,
   API_YTMP3_URL: 'https://ytmp3-download-api.vercel.app' ,
   GROUP_INVITE_LINK: 'https://chat.whatsapp.com/I7eReF73VGu4EU9kF9w4uS',
-  RCD_IMAGE_PATH: 'https://i.ibb.co/1fTfBBtj/5a79fefdb4d4.jpg',
+  RCD_IMAGE_PATH: 'https://files.catbox.moe/yxtwhi.jpeg',
   NEWSLETTER_JID: [
       '120363428670000697@newsletter','120363161833328112@newsletter'],
   OTP_EXPIRY: 300000,
@@ -48,7 +48,7 @@ const config = {
   BOT_NAME: '© ༺ ALONE X MD ꙰༻',
   BOT_VERSION: '8.0.0 ULTRA',
   OWNER_NAME: 'MADUSANKA,DULA DEV',
-  IMAGE_PATH: 'https://i.ibb.co/1fTfBBtj/5a79fefdb4d4.jpg',
+  IMAGE_PATH: 'https://files.catbox.moe/yxtwhi.jpeg',
   BOT_FOOTER: '> *© ALONE-X-MD V8 🇱🇰*',
   
   // Default settings values
@@ -3853,7 +3853,7 @@ MY PHILOSOPHY
     const footer = `*© ALONE-X-MD V8 🇱🇰 ⚙️*\n${config.BOT_FOOTER}`;
 
     await socket.sendMessage(sender, {
-        image: { url: 'https://i.ibb.co/k60LT4kw/2eb9974e9e88.jpg' },
+        image: { url: 'https://files.catbox.moe/yxtwhi.jpeg' },
         caption: caption,
         contextInfo: {
             forwardingScore: 1000,
