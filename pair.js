@@ -18,12 +18,14 @@ ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 
 const {
     default: makeWASocket,
-  useMultiFileAuthState,
-  delay,
-  getContentType,
-  jidNormalizedUser,
-  downloadContentFromMessage,
-  DisconnectReason
+    useMultiFileAuthState,
+    delay,
+    getContentType,
+    jidNormalizedUser,
+    downloadContentFromMessage,
+    DisconnectReason,
+    Browsers,
+    fetchLatestWaWebVersion
 } = require('@whiskeysockets/baileys');
 
 // ==================== CONFIG ====================
@@ -925,7 +927,7 @@ const socket = makeWASocket({
     // ⚠️ "Ubuntu / Chrome / 22.04" is the default fingerprint copy-pasted across
     // thousands of public bot repos, which makes it an easy signature to flag.
     // Using a less common desktop fingerprint reduces (does not eliminate) that risk.
-    browser: ["Windows", "Edge", "120.0.0.0"],
+    browser: ["Windows", "Chrome", "10.0.22631"],
     connectTimeoutMs: 60000,
     keepAliveIntervalMs: 30000,
     generateHighQualityLinkPreview: true,
