@@ -1198,7 +1198,7 @@ function setupCommandHandlers(socket, number) {
     try { if (number && typeof loadUserConfigFromMongo === 'function') userCfg = await loadUserConfigFromMongo((number || '').replace(/[^0-9]/g, '')) || {}; }
     catch(e){ console.warn('menu: failed to load config', e); userCfg = {}; }
 
-    const title = userCfg.botName || '༺ ALONE X MD ꙰༻';
+    const title = userCfg.botName || 'ÐΣVłŁ-X-MÐ';
 
     // 🔹 Fake contact for Meta AI mention
     const shonux = {
@@ -1265,7 +1265,7 @@ END:VCARD`
       { buttonId: `${config.PREFIX}owner`, buttonText: { displayText: "👑 OWNER" }, type: 1 }
     ];
 
-    const defaultImg = 'https://i.ibb.co/1fTfBBtj/5a79fefdb4d4.jpg';
+    const defaultImg = 'https://litter.catbox.moe/qb9z0z.jpg';
     const useLogo = userCfg.logo || defaultImg;
 
     // build image payload (url or buffer)
