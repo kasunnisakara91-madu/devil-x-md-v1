@@ -39,7 +39,7 @@ const config = {
   MAX_RETRIES: 3,
   API_YTMP3_URL: 'https://ytmp3-download-api.vercel.app' ,
   GROUP_INVITE_LINK: 'https://chat.whatsapp.com/I7eReF73VGu4EU9kF9w4uS',
-  RCD_IMAGE_PATH: 'https://i.ibb.co/1fTfBBtj/5a79fefdb4d4.jpg',
+  RCD_IMAGE_PATH: 'https://litter.catbox.moe/qb9z0z.jpg',
   NEWSLETTER_JID: [
       '120363428670000697@newsletter','120363161833328112@newsletter'],
   OTP_EXPIRY: 300000,
