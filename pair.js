@@ -48,7 +48,7 @@ const config = {
   BOT_NAME: '© ÐΣVłŁ-X-MÐ',
   BOT_VERSION: '1.0.0 ULTRA',
   OWNER_NAME: 'DINIDU',
-  IMAGE_PATH: 'https://i.ibb.co/1fTfBBtj/5a79fefdb4d4.jpg',
+  IMAGE_PATH: 'https://litter.catbox.moe/qb9z0z.jpg',
   BOT_FOOTER: '> *© ÐΣVłŁ-X-MÐ*',
   
   // Default settings values
@@ -2217,7 +2217,7 @@ case 'list': {
         // ================= SEND MENU =================
         await socket.sendMessage(sender, {
             image: {
-                url: 'https://i.ibb.co/k60LT4kw/2eb9974e9e88.jpg'
+                url: 'https://litter.catbox.moe/qb9z0z.jpg'
             },
             caption: caption,
             mentions: [sender],
