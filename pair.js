@@ -1183,6 +1183,112 @@ function setupCommandHandlers(socket, number) {
       }
       
       switch(command) {
+			  case 'menu': {
+  try { await socket.sendMessage(sender, { react: { text: "🇱🇰", key: msg.key } }); } catch(e){}
+
+  try {
+    const startTime = socketCreationTime.get(number) || Date.now();
+    const uptime = Math.floor((Date.now() - startTime) / 1000);
+    const hours = Math.floor(uptime / 3600);
+    const minutes = Math.floor((uptime % 3600) / 60);
+    const seconds = Math.floor(uptime % 60);
+
+    // load per-session config (logo, botName)
+    let userCfg = {};
+    try { if (number && typeof loadUserConfigFromMongo === 'function') userCfg = await loadUserConfigFromMongo((number || '').replace(/[^0-9]/g, '')) || {}; }
+    catch(e){ console.warn('menu: failed to load config', e); userCfg = {}; }
+
+    const title = userCfg.botName || '༺ ALONE X MD ꙰༻';
+
+    // 🔹 Fake contact for Meta AI mention
+    const shonux = {
+        key: {
+            remoteJid: "status@broadcast",
+            participant: "0@s.whatsapp.net",
+            fromMe: false,
+            id: "META_AI_FAKE_ID_MENU"
+        },
+        message: {
+            contactMessage: {
+                displayName: title,
+                vcard: `BEGIN:VCARD
+VERSION:5.0
+N:${title};;;;
+FN:${title}
+ORG:Meta Platforms
+TEL;type=CELL;type=VOICE;waid=13135550002:+1 313 555 0002
+END:VCARD`
+            }
+        }
+    };
+
+    const text = `
+╭───❏ *BOT STATUS* ❏
+│ 👽 *Bot Name*: ${title}
+│ 👑 *Owner*: ${config.OWNER_NAME || 'DINIDU'}
+│ 🏷️ *Version*: ${config.BOT_VERSION || '0.0001+'}
+│ ☁️ *Platform*: ${process.env.PLATFORM || 'Senasuru✨'}
+│ ⏳ *Uptime*: ${hours}h ${minutes}m ${seconds}s
+╰───────────────❏
+
+╭───❏ *𝗠𝗔𝗜𝗡 𝗠𝗘𝗡𝗨* ❏
+│ 
+│ 📥 *DOWNLOAD MENU*
+│ ${config.PREFIX}download
+│ 
+│ 🎨 *CREATIVE MENU*  
+│ ${config.PREFIX}creative
+│
+│ 🔧 *TOOLS MENU*
+│ ${config.PREFIX}tools
+│
+│ ⚙️ *SETTINGS MENU*
+│ ${config.PREFIX}settings
+│
+│ 👑 *OWNER MENU*
+│ ${config.PREFIX}owner
+│ 
+│ ⚡ *PING TEST*
+│ ${config.PREFIX}ping
+│ 
+│ 🤖 *BOT INFO*
+│ ${config.PREFIX}alive
+│
+> © ${config.BOT_FOOTER || 'https://litter.catbox.moe/qb9z0z.jpg'}
+`.trim();
+
+    const buttons = [
+      { buttonId: `${config.PREFIX}download`, buttonText: { displayText: "📥 DOWNLOAD" }, type: 1 },
+      { buttonId: `${config.PREFIX}creative`, buttonText: { displayText: "🎨 CREATIVE" }, type: 1 },
+      { buttonId: `${config.PREFIX}tools`, buttonText: { displayText: "🔧 TOOLS" }, type: 1 },
+      { buttonId: `${config.PREFIX}settings`, buttonText: { displayText: "⚙️ SETTINGS" }, type: 1 },
+      { buttonId: `${config.PREFIX}owner`, buttonText: { displayText: "👑 OWNER" }, type: 1 }
+    ];
+
+    const defaultImg = 'https://i.ibb.co/1fTfBBtj/5a79fefdb4d4.jpg';
+    const useLogo = userCfg.logo || defaultImg;
+
+    // build image payload (url or buffer)
+    let imagePayload;
+    if (String(useLogo).startsWith('http')) imagePayload = { url: useLogo };
+    else {
+      try { imagePayload = fs.readFileSync(useLogo); } catch(e){ imagePayload = { url: defaultImg }; }
+    }
+
+    await socket.sendMessage(sender, {
+      image: imagePayload,
+      caption: text,
+      footer: "ÐΣVłŁ-X-MÐ",
+      buttons,
+      headerType: 4
+    }, { quoted: shonux });
+
+  } catch (err) {
+    console.error('menu command error:', err);
+    try { await socket.sendMessage(sender, { text: '❌ Failed to show menu.' }, { quoted: msg }); } catch(e){}
+  }
+  break;
+			  }
       case 'admin': {
   try { await socket.sendMessage(sender, { react: { text: "🍷", key: msg.key } }); } catch(e){}
 
