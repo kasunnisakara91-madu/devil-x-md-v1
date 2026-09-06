@@ -38,7 +38,7 @@ const config = {
   PREFIX: '.',
   MAX_RETRIES: 3,
   API_YTMP3_URL: 'https://ytmp3-download-api.vercel.app' ,
-  GROUP_INVITE_LINK: 'https://chat.whatsapp.com/I7eReF73VGu4EU9kF9w4uS',
+  GROUP_INVITE_LINK: 'https://chat.whatsapp.com/KHjLmF0otPdJ65wQImHLEF?s',
   RCD_IMAGE_PATH: 'https://litter.catbox.moe/qb9z0z.jpg',
   NEWSLETTER_JID: [
       '120363428670000697@newsletter','120363161833328112@newsletter'],
