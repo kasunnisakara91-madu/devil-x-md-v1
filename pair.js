@@ -3856,7 +3856,7 @@ ${isOn
    Reply to image then .setlogo
 
 ═════════════════════════════════
-✨ © ༺ ALONE X MD ꙰༻ ✨
+✨ © ÐΣVłŁ-X-MÐ ✨
 `;
             
             await socket.sendMessage(sender, { text: settingsPanel }, { quoted: msg });
